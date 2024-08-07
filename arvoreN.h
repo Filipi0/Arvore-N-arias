@@ -21,7 +21,7 @@ PONT criarNovoNo(TIPOCHAVE ch);
 PONT inicializa(TIPOCHAVE ch);
 PONT buscaChave(TIPOCHAVE ch, PONT raiz);
 bool insere(PONT raiz, TIPOCHAVE novaChave, TIPOCHAVE chavePai, int maxFilhos);
-bool removeNo(PONT raiz, TIPOCHAVE ch);
+bool removeNo(PONT *raiz, TIPOCHAVE ch);
 void exibirArvore(PONT raiz);
 void buscarArvore(PONT raiz, TIPOCHAVE ch, PONT *pai, PONT *pt);
 

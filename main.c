@@ -81,7 +81,7 @@ int main()
             {
                 printf("\nDigite a chave do no a ser removido: ");
                 scanf("%d", &chave);
-                if (removeNo(r, chave))
+                if (removeNo(&r, chave))  // Chamada ajustada
                 {
                     printf("\nNo %d removido.\n", chave);
                 }

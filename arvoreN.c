@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include "arvoreN.h"
 
-
 typedef NO *PONT;
 
 PONT criarNovoNo(TIPOCHAVE ch)
@@ -11,7 +10,7 @@ PONT criarNovoNo(TIPOCHAVE ch)
     novo->primFilho = NULL;
     novo->proxIrmao = NULL;
     novo->chave = ch;
-    novo->numFilhos = 0; 
+    novo->numFilhos = 0;
     return novo;
 }
 
@@ -64,12 +63,39 @@ bool insere(PONT raiz, TIPOCHAVE novaChave, TIPOCHAVE chavePai, int maxFilhos)
     return true;
 }
 
-bool removeNo(PONT raiz, TIPOCHAVE ch)
+#include <stdlib.h>
+
+bool removeNo(PONT *raiz, TIPOCHAVE ch)
 {
-    if (raiz == NULL)
+    if (*raiz == NULL)
         return false;
-    PONT p = raiz->primFilho;
+
+    PONT p = *raiz;
+
+    // Caso a chave seja a da raiz
+    if (p->chave == ch)
+    {
+        if (p->primFilho)
+        {
+            PONT ultimoIrmao = p->primFilho;
+            while (ultimoIrmao->proxIrmao)
+                ultimoIrmao = ultimoIrmao->proxIrmao;
+
+            ultimoIrmao->proxIrmao = p->proxIrmao;
+
+            *raiz = p->primFilho;
+        }
+        else
+        {
+            *raiz = p->proxIrmao;
+        }
+
+        free(p);
+        return true;
+    }
+
     PONT prev = NULL;
+    p = (*raiz)->primFilho;
 
     while (p && p->chave != ch)
     {
@@ -85,18 +111,18 @@ bool removeNo(PONT raiz, TIPOCHAVE ch)
         }
         else
         {
-            raiz->primFilho = p->proxIrmao;
+            (*raiz)->primFilho = p->proxIrmao;
         }
         free(p);
-        raiz->numFilhos--; 
+        (*raiz)->numFilhos--;
         return true;
     }
     else
     {
-        p = raiz->primFilho;
+        p = (*raiz)->primFilho;
         while (p)
         {
-            if (removeNo(p, ch))
+            if (removeNo(&p, ch))
                 return true;
             p = p->proxIrmao;
         }
